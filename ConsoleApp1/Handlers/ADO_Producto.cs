@@ -13,7 +13,7 @@ namespace ConsoleApp1.Handlers
 
     public class ADO_Producto
     {
-        public static List<Producto> TraerProducto(int IdUsu)
+        public  List<Producto> TraerProducto(int IdUsu)
         {
             var ListaProducto = new List<Producto>();
 

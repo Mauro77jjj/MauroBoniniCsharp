@@ -9,10 +9,10 @@ namespace ConsoleApp1.Models
 
     public class ProductoVendido
     {
-        private int _id { get; set; }
-        private int _IdProducto { get; set; }
-        private int _Stock { get; set; }
-        private int _IdVenta { get; set; }
+        public int _id { get; set; }
+        public int _IdProducto { get; set; }
+        public int _Stock { get; set; }
+        public int _IdVenta { get; set; }
 
 
 

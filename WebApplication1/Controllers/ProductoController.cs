@@ -11,9 +11,9 @@ namespace WebApplication2
         public class ProductoController : ControllerBase
         {
             [HttpGet("GetProductos")]
-            public List<Producto> Get()
+            public List<Producto> Get(ADO_Producto produ)
             {
-                return ADO_Producto.TraerProducto();
+                 return produ.TraerProducto();
             }
             [HttpGet("GetProductosId")]
             public Producto Get(Int32 id)

@@ -34,9 +34,9 @@ namespace ConsoleApp1.Handlers
                 {
                     Venta vent = new Venta();
 
-                    vent._id = Convert.ToInt32(reader.GetValue(0));
-                    vent._Comentarios = reader.GetValue(1).ToString();
-                    vent._IdUsuario = Convert.ToInt32(reader.GetValue(2));
+                    vent.id = Convert.ToInt32(reader.GetValue(0));
+                    vent.Comentarios = reader.GetValue(1).ToString();
+                    vent.IdUsuario = Convert.ToInt32(reader.GetValue(2));
 
                     ListaVenta.Add(vent);
                 }
@@ -62,8 +62,8 @@ namespace ConsoleApp1.Handlers
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[Venta] (Comentarios, IdUsuario) VALUES (@Comentarios, @IdUsuario); Select scope_identity();", conn);
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Add(new SqlParameter("Comentarios", SqlDbType.NVarChar)).Value = vtaProductos._Comentarios;
-                cmd.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.BigInt)).Value = vtaProductos._IdUsuario;
+                cmd.Parameters.Add(new SqlParameter("Comentarios", SqlDbType.NVarChar)).Value = vtaProductos.Comentarios;
+                cmd.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.BigInt)).Value = vtaProductos.IdUsuario;
                 idVenta = Convert.ToInt64(cmd.ExecuteScalar());
 
                 //INSERT en tabla producto vendido con lista de productos enviados
@@ -72,15 +72,15 @@ namespace ConsoleApp1.Handlers
                     //Agregar Venta
                     cmd = new SqlCommand("INSERT INTO ProductoVendido (Stock,IdProducto,IdVenta)  VALUES   (@Stock,@IdProducto,@IdVenta) ", conn);
                     cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.Add(new SqlParameter("Stock", SqlDbType.Int)).Value = producto._Stock;
-                    cmd.Parameters.Add(new SqlParameter("IdProducto", SqlDbType.BigInt)).Value = producto._IdProducto;
+                    cmd.Parameters.Add(new SqlParameter("Stock", SqlDbType.Int)).Value = producto.Stock;
+                    cmd.Parameters.Add(new SqlParameter("IdProducto", SqlDbType.BigInt)).Value = producto.IdProducto;
                     cmd.Parameters.Add(new SqlParameter("IdVenta", SqlDbType.BigInt)).Value = idVenta;
                     cmd.ExecuteNonQuery();
                     //Actualizar Stock en Productos
                     cmd = new SqlCommand("UPDATE Producto SET Stock = Stock - @Stock WHERE idProducto = @IdProducto", conn);
                     cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.Add(new SqlParameter("Stock", SqlDbType.Int)).Value = producto._Stock;
-                    cmd.Parameters.Add(new SqlParameter("IdProducto", SqlDbType.BigInt)).Value = producto._IdProducto;
+                    cmd.Parameters.Add(new SqlParameter("Stock", SqlDbType.Int)).Value = producto.Stock;
+                    cmd.Parameters.Add(new SqlParameter("IdProducto", SqlDbType.BigInt)).Value = producto.IdProducto;
                     cmd.ExecuteNonQuery();
                 }
                 conn.Close();

@@ -8,34 +8,34 @@ namespace ConsoleApp1.Models;
 
 public class Producto
 {
-    public int _id { get; set; }
-    public string _Descripcion { get; set; }
-    public double _Costo { get; set; }
-    public double _PrecioVenta { get; set; }
-    public int _Stock { get; set; }
-    public int _IdUsuario { get; set; }
+    public int id { get; set; }
+    public string Descripcion { get; set; }
+    public double Costo { get; set; }
+    public double PrecioVenta { get; set; }
+    public int Stock { get; set; }
+    public int IdUsuario { get; set; }
 
 
     // por defecto
     public Producto()
     {
-        _id = 0;
-        _Descripcion = string.Empty;
-        _Costo = 0;
-        _PrecioVenta = 0;
-        _Stock = 0;
-        _IdUsuario = 0;
+        id = 0;
+        Descripcion = string.Empty;
+        Costo = 0;
+        PrecioVenta = 0;
+        Stock = 0;
+        IdUsuario = 0;
     }
 
 
     public Producto(int id, string Descripcion, double Costo, double PrecioVenta, int Stock, int IdUsuario)
     {
-        _id = id;
-        _Descripcion = Descripcion;
-        _Costo = Costo;
-        _PrecioVenta = PrecioVenta;
-        _Stock = Stock;
-        _IdUsuario = IdUsuario;
+        id = id;
+        Descripcion = Descripcion;
+        Costo = Costo;
+        PrecioVenta = PrecioVenta;
+        Stock = Stock;
+        IdUsuario = IdUsuario;
     }
 
 }

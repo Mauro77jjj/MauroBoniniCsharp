@@ -33,12 +33,12 @@ namespace ConsoleApp1.Handlers
                 while (reader.Read())
                 {
 
-                    Resultad._id = Convert.ToInt32(reader.GetValue(0));
-                    Resultad._Nombre = reader.GetValue(1).ToString();
-                    Resultad._Apellido = reader.GetValue(2).ToString();
-                    Resultad._NombreUsuario = reader.GetValue(3).ToString();
-                    Resultad._Contraseña = reader.GetValue(4).ToString();
-                    Resultad._Mail = reader.GetValue(5).ToString();
+                    Resultad.id = Convert.ToInt32(reader.GetValue(0));
+                    Resultad.Nombre = reader.GetValue(1).ToString();
+                    Resultad.Apellido = reader.GetValue(2).ToString();
+                    Resultad.NombreUsuario = reader.GetValue(3).ToString();
+                    Resultad.Contraseña = reader.GetValue(4).ToString();
+                    Resultad.Mail = reader.GetValue(5).ToString();
 
 
                 }
@@ -86,12 +86,12 @@ namespace ConsoleApp1.Handlers
                 {
 
 
-                    Resultado._id = Convert.ToInt32(reader.GetValue(0));
-                    Resultado._Nombre = reader.GetValue(1).ToString();
-                    Resultado._Apellido = reader.GetValue(2).ToString();
-                    Resultado._NombreUsuario = reader.GetValue(3).ToString();
-                    Resultado._Contraseña = reader.GetValue(4).ToString();
-                    Resultado._Mail = reader.GetValue(5).ToString();
+                    Resultado.id = Convert.ToInt32(reader.GetValue(0));
+                    Resultado.Nombre = reader.GetValue(1).ToString();
+                    Resultado.Apellido = reader.GetValue(2).ToString();
+                    Resultado.NombreUsuario = reader.GetValue(3).ToString();
+                    Resultado.Contraseña = reader.GetValue(4).ToString();
+                    Resultado.Mail = reader.GetValue(5).ToString();
 
                 }
 
@@ -120,12 +120,12 @@ namespace ConsoleApp1.Handlers
                 if (tabla.Rows.Count > 0)
                 {
                     DataRow dr = tabla.Rows[0];
-                    usuario._id = (int)Convert.ToInt64(dr["Id"]); ;
-                    usuario._Apellido = dr["Apellido"].ToString();
-                    usuario._Nombre = dr["Nombre"].ToString();
-                    usuario._NombreUsuario = dr["NombreUsuario"].ToString();
-                    usuario._Contraseña = dr["Contraseña"].ToString();
-                    usuario._Mail = dr["Mail"].ToString();
+                    usuario.id = (int)Convert.ToInt64(dr["Id"]); ;
+                    usuario.Apellido = dr["Apellido"].ToString();
+                    usuario.Nombre = dr["Nombre"].ToString();
+                    usuario.NombreUsuario = dr["NombreUsuario"].ToString();
+                    usuario.Contraseña = dr["Contraseña"].ToString();
+                    usuario.Mail = dr["Mail"].ToString();
                 }
 
                 conn.Close();
@@ -147,11 +147,11 @@ namespace ConsoleApp1.Handlers
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO Usuario(Nombre,Apellido,NombreUsuario,Contraseña,Mail) VALUES (@Nombre,@Apellido,@NombreUsuario,@Contraseña,@Mail); Select scope_identity()", conn);
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Add(new SqlParameter("Nombre", SqlDbType.NVarChar)).Value = usu._Nombre;
-                cmd.Parameters.Add(new SqlParameter("Apellido", SqlDbType.NVarChar)).Value = usu._Apellido;
-                cmd.Parameters.Add(new SqlParameter("NombreUsuario", SqlDbType.NVarChar)).Value = usu._NombreUsuario;
-                cmd.Parameters.Add(new SqlParameter("Contraseña", SqlDbType.NVarChar)).Value = usu._Contraseña;
-                cmd.Parameters.Add(new SqlParameter("Mail", SqlDbType.NVarChar)).Value = usu._Mail;
+                cmd.Parameters.Add(new SqlParameter("Nombre", SqlDbType.NVarChar)).Value = usu.Nombre;
+                cmd.Parameters.Add(new SqlParameter("Apellido", SqlDbType.NVarChar)).Value = usu.Apellido;
+                cmd.Parameters.Add(new SqlParameter("NombreUsuario", SqlDbType.NVarChar)).Value = usu.NombreUsuario;
+                cmd.Parameters.Add(new SqlParameter("Contraseña", SqlDbType.NVarChar)).Value = usu.Contraseña;
+                cmd.Parameters.Add(new SqlParameter("Mail", SqlDbType.NVarChar)).Value = usu.Mail;
                 id = Convert.ToInt64(cmd.ExecuteScalar());
                 conn.Close();
             }
@@ -172,12 +172,12 @@ namespace ConsoleApp1.Handlers
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("UPDATE Usuario SET  Nombre = @Nombre, Apellido = @Apellido , NombreUsuario = @NombreUsuario , Contraseña = @Contraseña , Mail = @Mail WHERE id = @id", conn);
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Add(new SqlParameter("Id", SqlDbType.NVarChar)).Value = usu._id;
-                cmd.Parameters.Add(new SqlParameter("Nombre", SqlDbType.NVarChar)).Value = usu._Nombre;
-                cmd.Parameters.Add(new SqlParameter("Apellido", SqlDbType.NVarChar)).Value = usu._Apellido;
-                cmd.Parameters.Add(new SqlParameter("NombreUsuario", SqlDbType.NVarChar)).Value = usu._NombreUsuario;
-                cmd.Parameters.Add(new SqlParameter("Contraseña", SqlDbType.NVarChar)).Value = usu._Contraseña;
-                cmd.Parameters.Add(new SqlParameter("Mail", SqlDbType.NVarChar)).Value = usu._Mail;
+                cmd.Parameters.Add(new SqlParameter("Id", SqlDbType.NVarChar)).Value = usu.id;
+                cmd.Parameters.Add(new SqlParameter("Nombre", SqlDbType.NVarChar)).Value = usu.Nombre;
+                cmd.Parameters.Add(new SqlParameter("Apellido", SqlDbType.NVarChar)).Value = usu.Apellido;
+                cmd.Parameters.Add(new SqlParameter("NombreUsuario", SqlDbType.NVarChar)).Value = usu.NombreUsuario;
+                cmd.Parameters.Add(new SqlParameter("Contraseña", SqlDbType.NVarChar)).Value = usu.Contraseña;
+                cmd.Parameters.Add(new SqlParameter("Mail", SqlDbType.NVarChar)).Value = usu.Mail;
                 filas_modificadas = Convert.ToInt32(cmd.ExecuteNonQuery());
                 conn.Close();
             }
@@ -224,12 +224,12 @@ namespace ConsoleApp1.Handlers
                 while (reader.Read())
                 {
                     Usuario usr = new Usuario();
-                    usr._id = Convert.ToInt32(reader.GetValue(0));
-                    usr._Nombre = reader.GetValue(1).ToString();
-                    usr._Apellido = reader.GetValue(2).ToString();
-                    usr._NombreUsuario = reader.GetValue(3).ToString();
-                    usr._Contraseña = reader.GetValue(4).ToString();
-                    usr._Mail = reader.GetValue(5).ToString();
+                    usr.id = Convert.ToInt32(reader.GetValue(0));
+                    usr.Nombre = reader.GetValue(1).ToString();
+                    usr.Apellido = reader.GetValue(2).ToString();
+                    usr.NombreUsuario = reader.GetValue(3).ToString();
+                    usr.Contraseña = reader.GetValue(4).ToString();
+                    usr.Mail = reader.GetValue(5).ToString();
 
                     Resultad.Add(usr);
                 }

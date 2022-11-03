@@ -14,7 +14,7 @@ namespace ConsoleApp1.Handlers
 
     public class ADO_Producto
     {
-        public List<Producto> TraerProducto()
+        public  List<Producto> TraerProducto()
         {
             var ListaProducto = new List<Producto>();
 
@@ -36,12 +36,12 @@ namespace ConsoleApp1.Handlers
                 {
                     Producto prod = new Producto();
 
-                    prod._id = Convert.ToInt32(reader.GetValue(0));
-                    prod._Descripcion = reader.GetValue(1).ToString();
-                    prod._Costo = Convert.ToInt32(reader.GetValue(2));
-                    prod._PrecioVenta = Convert.ToInt32(reader.GetValue(3));
-                    prod._Stock = Convert.ToInt32(reader.GetValue(4));
-                    prod._IdUsuario = Convert.ToInt32(reader.GetValue(5));
+                    prod.id = Convert.ToInt32(reader.GetValue(0));
+                    prod.Descripcion = reader.GetValue(1).ToString();
+                    prod.Costo = Convert.ToInt32(reader.GetValue(2));
+                    prod.PrecioVenta = Convert.ToInt32(reader.GetValue(3));
+                    prod.Stock = Convert.ToInt32(reader.GetValue(4));
+                    prod.IdUsuario = Convert.ToInt32(reader.GetValue(5));
 
                     ListaProducto.Add(prod);
                 }
@@ -63,11 +63,11 @@ namespace ConsoleApp1.Handlers
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Producto (Descripciones,Costo,PrecioVenta,Stock,IdUsuario) VALUES (@Descripciones,@Costo,@PrecioVenta,@Stock,@IdUsuario); Select scope_identity()", conn);
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Add(new SqlParameter("Descripciones", SqlDbType.NVarChar)).Value = prod._id;
-                cmd.Parameters.Add(new SqlParameter("Costo", SqlDbType.Float)).Value = prod._Costo;
-                cmd.Parameters.Add(new SqlParameter("PrecioVenta", SqlDbType.Float)).Value = prod._PrecioVenta;
-                cmd.Parameters.Add(new SqlParameter("Stock", SqlDbType.Int)).Value = prod._Stock;
-                cmd.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.BigInt)).Value = prod._IdUsuario;
+                cmd.Parameters.Add(new SqlParameter("Descripciones", SqlDbType.NVarChar)).Value = prod.id;
+                cmd.Parameters.Add(new SqlParameter("Costo", SqlDbType.Float)).Value = prod.Costo;
+                cmd.Parameters.Add(new SqlParameter("PrecioVenta", SqlDbType.Float)).Value = prod.PrecioVenta;
+                cmd.Parameters.Add(new SqlParameter("Stock", SqlDbType.Int)).Value = prod.Stock;
+                cmd.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.BigInt)).Value = prod.IdUsuario;
                 id = Convert.ToInt64(cmd.ExecuteScalar());
                 conn.Close();
             }
@@ -87,12 +87,12 @@ namespace ConsoleApp1.Handlers
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("UPDATE dbo.Producto  SET Descripciones = @Descripciones ,Costo = @Costo ,PrecioVenta = @PrecioVenta, Stock = @Stock, IdUsuario = @idUsuario WHERE id = @id ", conn);
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Add(new SqlParameter("Id", SqlDbType.BigInt)).Value = prod._id;
-                cmd.Parameters.Add(new SqlParameter("Descripciones", SqlDbType.NVarChar)).Value = prod._Descripcion;
-                cmd.Parameters.Add(new SqlParameter("Costo", SqlDbType.Float)).Value = prod._Costo;
-                cmd.Parameters.Add(new SqlParameter("PrecioVenta", SqlDbType.Float)).Value = prod._PrecioVenta;
-                cmd.Parameters.Add(new SqlParameter("Stock", SqlDbType.Int)).Value = prod._Stock;
-                cmd.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.BigInt)).Value = prod._IdUsuario;
+                cmd.Parameters.Add(new SqlParameter("Id", SqlDbType.BigInt)).Value = prod.id;
+                cmd.Parameters.Add(new SqlParameter("Descripciones", SqlDbType.NVarChar)).Value = prod.Descripcion;
+                cmd.Parameters.Add(new SqlParameter("Costo", SqlDbType.Float)).Value = prod.Costo;
+                cmd.Parameters.Add(new SqlParameter("PrecioVenta", SqlDbType.Float)).Value = prod.PrecioVenta;
+                cmd.Parameters.Add(new SqlParameter("Stock", SqlDbType.Int)).Value = prod.Stock;
+                cmd.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.BigInt)).Value = prod.IdUsuario;
                 filas_modificadas = Convert.ToInt32(cmd.ExecuteNonQuery());
                 conn.Close();
             }
@@ -112,7 +112,7 @@ namespace ConsoleApp1.Handlers
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("Delete FROM ProductoVendido WHERE Id = @idProducto", conn);
+                SqlCommand cmd = new SqlCommand("Delete FROM ProductoVendido WHERE IdProducto = @idProducto", conn);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.Add(new SqlParameter("idProducto", SqlDbType.BigInt)).Value = idProducto;
                 cmd.ExecuteNonQuery();
@@ -126,7 +126,7 @@ namespace ConsoleApp1.Handlers
             }
             return filas_eliminadas;
         }
-        public Producto TraerProductoId(int IdProducto)
+        public static Producto TraerProductoId(int IdProducto)
         {
             Producto producto = new Producto();
 
@@ -147,12 +147,12 @@ namespace ConsoleApp1.Handlers
                 if (tabla.Rows.Count > 0)
                 {
                     DataRow dr = tabla.Rows[0];
-                    producto._id = (int)Convert.ToInt64(dr["Id"]);
-                    producto._Descripcion= dr["Descripciones"].ToString();
-                    producto._Costo = Convert.ToDouble(dr["Costo"].ToString());
-                    producto._PrecioVenta = Convert.ToDouble(dr["PrecioVenta"].ToString());
-                    producto._Stock = Convert.ToInt32(dr["Stock"].ToString());
-                    producto._IdUsuario = (int)Convert.ToInt64(dr["IdUsuario"].ToString());
+                    producto.id = (int)Convert.ToInt64(dr["Id"]);
+                    producto.Descripcion= dr["Descripciones"].ToString();
+                    producto.Costo = Convert.ToDouble(dr["Costo"].ToString());
+                    producto.PrecioVenta = Convert.ToDouble(dr["PrecioVenta"].ToString());
+                    producto.Stock = Convert.ToInt32(dr["Stock"].ToString());
+                    producto.IdUsuario = (int)Convert.ToInt64(dr["IdUsuario"].ToString());
                 }
 
                 connection.Close();
@@ -183,12 +183,12 @@ namespace ConsoleApp1.Handlers
                 {
                     Producto prod = new Producto();
 
-                    prod._id = Convert.ToInt32(reader.GetValue(0));
-                    prod._Descripcion = reader.GetValue(1).ToString();
-                    prod._Costo = Convert.ToInt32(reader.GetValue(2));
-                    prod._PrecioVenta = Convert.ToInt32(reader.GetValue(3));
-                    prod._Stock = Convert.ToInt32(reader.GetValue(4));
-                    prod._IdUsuario = Convert.ToInt32(reader.GetValue(5));
+                    prod.id = Convert.ToInt32(reader.GetValue(0));
+                    prod.Descripcion = reader.GetValue(1).ToString();
+                    prod.Costo = Convert.ToInt32(reader.GetValue(2));
+                    prod.PrecioVenta = Convert.ToInt32(reader.GetValue(3));
+                    prod.Stock = Convert.ToInt32(reader.GetValue(4));
+                    prod.IdUsuario = Convert.ToInt32(reader.GetValue(5));
 
                     ListaProducto.Add(prod);
                 }

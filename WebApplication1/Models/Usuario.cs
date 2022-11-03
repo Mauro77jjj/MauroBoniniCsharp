@@ -9,22 +9,22 @@ namespace ConsoleApp1.Models;
 
 public class Usuario
 {
-    public int _id { get; set; }
-    public string _Nombre { get; set; }
-    public string _Apellido { get; set; }
-    public string _NombreUsuario { get; set; }
-    public string _Contraseña { get; set; }
-    public string _Mail { get; set; }
+    public int id { get; set; }
+    public string Nombre { get; set; }
+    public string Apellido { get; set; }
+    public string NombreUsuario { get; set; }
+    public string Contraseña { get; set; }
+    public string Mail { get; set; }
 
     // por defecto
     public Usuario()
     {
-        _id = 0;
-        _Nombre = string.Empty;
-        _Apellido = string.Empty;
-        _NombreUsuario = string.Empty;
-        _Contraseña = string.Empty;
-        _Mail = string.Empty;
+        id = 0;
+        Nombre = string.Empty;
+        Apellido = string.Empty;
+        NombreUsuario = string.Empty;
+        Contraseña = string.Empty;
+        Mail = string.Empty;
     }
 
 
@@ -32,11 +32,11 @@ public class Usuario
 
     public Usuario(int id, string Nombre, string Apellido, string NombreUsuario, string Contraseña, string Mail)
     {
-        _id = id;
-        _Nombre = Nombre;
-        _Apellido = Apellido;
-        _NombreUsuario = NombreUsuario;
-        _Contraseña = Contraseña;
-        _Mail = Mail;
+        id = id;
+        Nombre = Nombre;
+        Apellido = Apellido;
+        NombreUsuario = NombreUsuario;
+        Contraseña = Contraseña;
+        Mail = Mail;
     }
 }

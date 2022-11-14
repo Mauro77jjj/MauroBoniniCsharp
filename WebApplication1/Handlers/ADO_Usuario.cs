@@ -75,6 +75,7 @@ namespace ConsoleApp1.Handlers
 
             using SqlConnection connection = new(cs);
             {
+                
                 connection.Open();
                 SqlCommand cmd = connection.CreateCommand();
                 cmd.CommandText = "Select * from Usuario where NombreUsuario = @User and Contraseña = @pw";
@@ -136,7 +137,8 @@ namespace ConsoleApp1.Handlers
         public static long CrearUsuario(Usuario usu)
 
         {
-            long id;
+            long id = 0;
+            Usuario existe = TraerUsuario(usu.NombreUsuario);
             SqlConnectionStringBuilder connectionbuilder = new SqlConnectionStringBuilder();
             connectionbuilder.DataSource = "DESKTOP-URBCJ9O";
             connectionbuilder.InitialCatalog = "SistemaGestion";
@@ -144,16 +146,20 @@ namespace ConsoleApp1.Handlers
             var cs = connectionbuilder.ConnectionString;
             using (SqlConnection conn = new SqlConnection(cs))
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Usuario(Nombre,Apellido,NombreUsuario,Contraseña,Mail) VALUES (@Nombre,@Apellido,@NombreUsuario,@Contraseña,@Mail); Select scope_identity()", conn);
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Add(new SqlParameter("Nombre", SqlDbType.NVarChar)).Value = usu.Nombre;
-                cmd.Parameters.Add(new SqlParameter("Apellido", SqlDbType.NVarChar)).Value = usu.Apellido;
-                cmd.Parameters.Add(new SqlParameter("NombreUsuario", SqlDbType.NVarChar)).Value = usu.NombreUsuario;
-                cmd.Parameters.Add(new SqlParameter("Contraseña", SqlDbType.NVarChar)).Value = usu.Contraseña;
-                cmd.Parameters.Add(new SqlParameter("Mail", SqlDbType.NVarChar)).Value = usu.Mail;
-                id = Convert.ToInt64(cmd.ExecuteScalar());
-                conn.Close();
+                if (existe.NombreUsuario == String.Empty)
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("INSERT INTO Usuario(Nombre,Apellido,NombreUsuario,Contraseña,Mail) VALUES (@Nombre,@Apellido,@NombreUsuario,@Contraseña,@Mail); Select scope_identity()", conn);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.Add(new SqlParameter("Nombre", SqlDbType.NVarChar)).Value = usu.Nombre;
+                    cmd.Parameters.Add(new SqlParameter("Apellido", SqlDbType.NVarChar)).Value = usu.Apellido;
+                    cmd.Parameters.Add(new SqlParameter("NombreUsuario", SqlDbType.NVarChar)).Value = usu.NombreUsuario;
+                    cmd.Parameters.Add(new SqlParameter("Contraseña", SqlDbType.NVarChar)).Value = usu.Contraseña;
+                    cmd.Parameters.Add(new SqlParameter("Mail", SqlDbType.NVarChar)).Value = usu.Mail;
+                    id = Convert.ToInt64(cmd.ExecuteScalar());
+                    conn.Close();
+                }
+                
             }
             return id;
 

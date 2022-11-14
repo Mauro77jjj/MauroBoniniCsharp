@@ -88,6 +88,88 @@ namespace ConsoleApp1.Handlers
 
         }
 
+        public static void EliminarVenta(Venta venta)
+        {
+            var listaPV = new List<ProductoVendido>();
+            string query = "SELECT * FROM ProductoVendido Where IdProducto = @IdVn";
+            string query2 = "UPDATE Producto SET Stock = Stock + @PvStock " +"WHERE Id = @IdProducto";
+            string query3 = "DELETE FROM ProductoVendido where IdVenta = @IdVn";
+            string query4 = "DELETE FROM venta WHERE Id = @Idvnt";
+            SqlConnectionStringBuilder connectionbuilder = new SqlConnectionStringBuilder();
+            connectionbuilder.DataSource = "DESKTOP-URBCJ9O";
+            connectionbuilder.InitialCatalog = "SistemaGestion";
+            connectionbuilder.IntegratedSecurity = true;
+            var cs = connectionbuilder.ConnectionString;
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd3 = new SqlCommand(query, conn))
+                {
+                    var param = new SqlParameter();
+                    param.ParameterName = "IdVn";
+                    param.SqlDbType = SqlDbType.BigInt;
+                    param.Value = venta.id;
+                    cmd3.Parameters.Add(param);
+
+                    using (SqlDataReader dr = cmd3.ExecuteReader())
+                    {
+
+                        while (dr.Read())
+                        {
+                            var pv = new ProductoVendido();
+
+                            pv.id = Convert.ToInt32(dr.GetValue(0));
+                            pv.Stock = Convert.ToInt32(dr.GetValue(1));
+                            pv.IdProducto = Convert.ToInt32(dr.GetValue(2));
+                            pv.IdVenta = Convert.ToInt32(dr.GetValue(3));
+
+                            listaPV.Add(pv);
+                        }
+                        dr.Close();
+                    }
+                }
+
+                using SqlCommand cmd = new SqlCommand(query2, conn);
+                {
+
+                    foreach (ProductoVendido pv in listaPV)
+                    {
+                        cmd.Parameters.Add(new SqlParameter("IdProducto", SqlDbType.Int)).Value = pv.IdProducto;
+                        cmd.Parameters.Add(new SqlParameter("PvStock", SqlDbType.Int)).Value = pv.Stock;
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+
+                using SqlCommand cmd2 = new SqlCommand(query3, conn);
+                {
+                    var param = new SqlParameter();
+                    param.ParameterName = "IdVn";
+                    param.SqlDbType = SqlDbType.BigInt;
+                    param.Value = venta.id;
+
+                    cmd2.Parameters.Add(param);
+                    cmd2.ExecuteNonQuery();
+
+                }
+
+                using (SqlCommand cmd4 = new SqlCommand(query4, conn))
+                {
+                    var param = new SqlParameter();
+                    param.ParameterName = "Idvnt";
+                    param.SqlDbType = SqlDbType.BigInt;
+                    param.Value = venta.id;
+
+                    cmd2.Parameters.Add(param);
+                    cmd2.ExecuteNonQuery();
+
+                }
+                conn.Close();
+            }
+
+        }
+
     }
 }
 

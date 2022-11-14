@@ -23,6 +23,11 @@ namespace WebApplication2
             return ADO_Venta.TraerVenta(id);
         }
 
+        [HttpDelete]
+        public void EliminarVenta([FromBody] Venta vtas)
+        {
+            ADO_Venta.EliminarVenta(vtas);
+        }
     }
 
 
